@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "606112018437",
+    "project_id": "receitas-87aef",
+    "storage_bucket": "receitas-87aef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:606112018437:android:47477ab1af0073f1fb6c6c",
+        "android_client_info": {
+          "package_name": "com.cokingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "606112018437-qo7fg4jl2ib5tatlge388oe5nhlo7rpb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQqoQ5L_55k8O6ULyeNttgf5rEpQkYKgI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "606112018437-qo7fg4jl2ib5tatlge388oe5nhlo7rpb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
