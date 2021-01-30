@@ -38,6 +38,11 @@ export function useRecipe() {
       return res;
     })
   }
+  async function deleteRecipe(id) {
+    await database.deleteRecipe(id).then((res) => {
+      console.log('deletada')
+    })
+  }
 
 
 
@@ -51,6 +56,6 @@ export function useRecipe() {
     getRecipe,
      id,
     getEspecificRecipe,
-    isertId
+    deleteRecipe
   };
 }

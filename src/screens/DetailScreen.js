@@ -8,6 +8,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Feather'
 import {useNavigation} from '@react-navigation/native';
 
 import {useRecipe} from '../hooks/userRecipe';
@@ -22,7 +23,7 @@ const DetailScreen = () => {
   const {state, dispatch} = useContext(AppContext)
   // const [receitas, setReceitas] = useState([])
   const navigation = useNavigation();
-  const {getRecipe, recipe, id, getEspecificRecipe} = useRecipe()
+  const {deleteRecipe, recipe, getEspecificRecipe} = useRecipe()
 
     
     const receitas = recipe.find((item) => {
@@ -37,10 +38,14 @@ const DetailScreen = () => {
     console.log('state', state.item)
   },[])
   
-  console.log(receitas)
 
   const onBack = () => {
     navigation.goBack();
+  }
+  const deletecurrentRecipe = () => {
+    deleteRecipe(state.item)
+    navigation.goBack();
+
   }
 
 
@@ -51,6 +56,9 @@ const DetailScreen = () => {
       <View style={styles.header}>
         <Pressable onPress={onBack}>
           <Image source={require('../assets/icon/back.png')} />
+        </Pressable>
+        <Pressable onPress={deletecurrentRecipe}>
+          <Icon name={'trash-2'} size={30} color={'#fff'}/>
         </Pressable>
 
 
@@ -79,18 +87,18 @@ const DetailScreen = () => {
       <Text style={styles.title}>Ingrdientes</Text>
       <View style={styles.body2}>
           <View style={styles.footerCard2}>
-            <Text style={styles.footerItemText}>{receitas.ingredientes}</Text>
+            <Text style={styles.footerItemText}>{receitas.modo_preparo}</Text>
             
           </View>
 
            
         </View>
-          <View style={{marginTop: 20, flexDirection: 'row'}}>
+          <View style={{marginTop: 20}}>
             <Text style={{marginRight: 10,  fontWeight: 'bold'}}>
-              Modo de Preparo
+              {' Modo de Preparo'}
             </Text>
             <Text>
-              { receitas.modo_preparo}
+              { receitas.ingredientes}
             </Text>
           </View>
         </>

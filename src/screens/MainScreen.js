@@ -17,13 +17,18 @@ const w = Dimensions.get('window').width
 const MainScreen = () => {
   const {state, dispatch} = useContext(AppContext)
   const navigation = useNavigation();
-  const {getRecipe,recipe} = useRecipe()
+  const {getRecipe} = useRecipe()
 
 
 
   useEffect(() => {
-    getRecipe()
-  }, [])
+    const unsubscribe = navigation.addListener('focus', () => {
+      console.log('renderizou')
+      getRecipe()
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   const handleDatails = async (id) => {
     dispatch({type: 'selectedItem', payload: id})

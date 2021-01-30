@@ -13,6 +13,7 @@ import {
   TouchableOpacity
 
 } from 'react-native';
+
 import {useNavigation} from '@react-navigation/native';
 import Textarea from 'react-native-textarea';
 
@@ -117,20 +118,20 @@ const CreateRecipe = () => {
         <Textarea
           containerStyle={styles.textareaContainer}
           style={styles.textarea}
-          value={preparo}
-          onChangeText={(t) => setPreparo(t)}
+          value={ingredientes}
+          onChangeText={(t) => setIngredientes(t)}
           maxLength={120}
-          placeholder={'Modo de preparo'}
+          placeholder={'Ingredientes'}
           placeholderTextColor={'#c7c7c7'}
           underlineColorAndroid={'transparent'}
         />
         <Textarea
           containerStyle={styles.textareaContainer}
           style={styles.textarea}
-          value={ingredientes}
-          onChangeText={setIngredientes}
+          value={preparo}
+          onChangeText={setPreparo}
           maxLength={120}
-          placeholder={'Ingredientes'}
+          placeholder={'Modo de Preparo'}
           placeholderTextColor={'#c7c7c7'}
           underlineColorAndroid={'transparent'}
         />

@@ -1,4 +1,6 @@
 import SQLite from "react-native-sqlite-storage";
+
+
 import { DatabaseInitialization } from "./databaseInicialization";
 import { AppState, AppStateStatus } from "react-native";
 
@@ -61,26 +63,13 @@ async function selectUsuario({login, senha}) {
 }
 
 
-async function getAllLists() {
-  console.log("[db] Fetching lists from the db...");
+async function deleteRecipe(id) {
   return getDatabase()
     .then((db) =>
-      
-      db.executeSql("SELECT list_id as id, title FROM List ORDER BY id DESC;"),
+      db.executeSql("DELETE FROM receitas WHERE id = ?;",[id]),
     )
     .then(([results]) => {
-      if (results === undefined) {
-        return [];
-      }
-      const count = results.rows.length;
-      const lists = [];
-      for (let i = 0; i < count; i++) {
-        const row = results.rows.item(i);
-        const { title, id } = row;
-        console.log(`[db] List title: ${title}, id: ${id}`);
-        lists.push({ id, title });
-      }
-      return lists;
+      console.log('receita deletada')
     });
 }
 
@@ -245,4 +234,6 @@ export const sqliteDatabase = {
   getEspecificRecipe,
   insertId,
   selectId,
+  deleteRecipe
+
 };
