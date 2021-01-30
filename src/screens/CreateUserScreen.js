@@ -87,6 +87,7 @@ const CreateUser = () => {
           style={styles.input}
           value={senha}
           onChangeText={(t) => setSenha(t)}
+          secureTextEntry={true}
         />
       <View style={{ alignItems: 'center'}}>
         <TouchableOpacity onPress={handleCreateUser} style={styles.btn}>

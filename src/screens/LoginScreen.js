@@ -66,7 +66,8 @@ const Login = () => {
               style={styles.input} 
               placeholder="Password"
               value={senha}
-              onChangeText={setSenha} 
+              onChangeText={setSenha}
+              secureTextEntry={true}
             />
             <View style={{alignItems: 'center'}}>
               <TouchableOpacity
