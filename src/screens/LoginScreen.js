@@ -2,7 +2,7 @@ import React, {useEffect, useState, useContext} from 'react';
 import {
   Dimensions,
   Image,
-  Pressable,
+  TouchableOpacity,
   StyleSheet,
   Text,
   View,
@@ -69,18 +69,18 @@ const Login = () => {
               onChangeText={setSenha} 
             />
             <View style={{alignItems: 'center'}}>
-              <Pressable
+              <TouchableOpacity
                 onPress={handleLogin}
                 style={styles.btn}>
                 <Text style={styles.btnTxt}>Login</Text>
-              </Pressable>
+              </TouchableOpacity>
             </View>
           </View>
-          <Pressable
+          <TouchableOpacity
             onPress={() => navigation.navigate('CreateUser')}
             style={styles.btn2}>
             <Text style={styles.textBtn2}>Não tenho uma conta.</Text>
-          </Pressable>
+          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>

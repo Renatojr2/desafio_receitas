@@ -12,20 +12,28 @@ export function useRecipe() {
   const database = useDatabase();
   const navigation = useNavigation();
 
+  // useEffect(() => {
+  //   dispatch({type: 'selectedItem', payload: id})
+  // },[id])
 
   async function insertRecipe(receita) {
     await database.insertRecipe(receita).then(setRecipe);
   }
-  async function getId(id) {
-    setId(id)
-    dispatch({type: 'selectedItem', payload: id})
-    navigation.navigate('DetailScreen')
+  async function isertId(id) {
+    await database.insertId(id).then(setId)
+  
   }
 
   async function getRecipe(receita) {
     await database.getRecipe(receita).then((res) => {
       const action = {type: 'selectRecipe', payload: res};
       dispatch(action);
+      setRecipe(res)
+      return res;
+    })
+  }
+  async function getEspecificRecipe(id) {
+    await database.getEspecificRecipe(id).then((res) => {
       setRecipe(res)
       return res;
     })
@@ -41,6 +49,8 @@ export function useRecipe() {
     setRecipe,
     recipe,
     getRecipe,
-    getId, id
+     id,
+    getEspecificRecipe,
+    isertId
   };
 }

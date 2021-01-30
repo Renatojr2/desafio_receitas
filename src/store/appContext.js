@@ -13,14 +13,17 @@ export const appReducer = (state, action) => {
     case 'selectRecipe':
       return { recipe: action.payload };
     case 'selectedItem':
-      return { item: action.payload };
+      if(action.payload === undefined) {
+        return state
+      }
+      return { ...state, item: action.payload };
     default:
       return state;
   }
 };
 
 export const initialState = {
-  user: {},
+  user: [],
   category: [],
   recipe: [],
   categorySelected: '',

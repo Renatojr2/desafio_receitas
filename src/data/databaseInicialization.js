@@ -55,6 +55,11 @@ export class DatabaseInitialization {
         nome VARCHAR(100) NULL
       );`
     );
+    transaction.executeSql(
+      `CREATE TABLE IF NOT EXISTS id(
+        id_recipe TEXT NOT NULL
+      );`
+    );
      
 
     transaction.executeSql(`

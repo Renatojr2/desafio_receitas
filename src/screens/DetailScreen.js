@@ -14,33 +14,32 @@ import {useRecipe} from '../hooks/userRecipe';
 
 import themes from '../config/themes';
 import {AppContext} from '../store/appContext'
-import {  } from 'react/cjs/react.development';
 
 const w = Dimensions.get('screen').width;
 
 
-const DetailScreen = ({route}) => {
+const DetailScreen = () => {
   const {state, dispatch} = useContext(AppContext)
   // const [receitas, setReceitas] = useState([])
   const navigation = useNavigation();
-  const {getRecipe, recipe, id} = useRecipe()
+  const {getRecipe, recipe, id, getEspecificRecipe} = useRecipe()
 
- 
-  getRecipe()
- const receitas =  recipe.filter(item => {
+    
+    const receitas = recipe.find((item) => {
       return item.id === state.item
-  })
+    })
+    console.log('fora', state.item)
+    console.log('receitas id', recipe)
   
   
   useEffect(() => {
-    getRecipe()
+    getEspecificRecipe(state.item)
     console.log('state', state.item)
-  }, [])
+  },[])
   
   console.log(receitas)
 
   const onBack = () => {
-    getRecipe()
     navigation.goBack();
   }
 
@@ -53,6 +52,8 @@ const DetailScreen = ({route}) => {
         <Pressable onPress={onBack}>
           <Image source={require('../assets/icon/back.png')} />
         </Pressable>
+
+
       </View>
       <ScrollView
         style={{
@@ -61,28 +62,40 @@ const DetailScreen = ({route}) => {
           paddingHorizontal: 20,
           paddingBottom: 56,
         }}>
+          {receitas ? 
+          (<>
         <View>
           <View style={styles.body}>
-            <Text style={styles.titleItem}>{receitas.nome}</Text>
-            <View style={styles.footerCard}>
-              <View style={styles.footerItem}>
-                <Image source={require('../assets/icon/clock.png')} />
-                <Text style={styles.footerItemText}>{receitas.tempo_preparo_minutos} min</Text>
-              </View>
-              <Text style={styles.footerItemText}>{receitas.porcoes} Porções</Text>
+          <Text style={styles.titleItem}>{receitas.nome}</Text>
+          <View style={styles.footerCard}>
+            <View style={styles.footerItem}>
+              <Image source={require('../assets/icon/clock.png')} />
+              <Text style={styles.footerItemText}>{receitas.tempo_preparo_minutos} min</Text>
             </View>
+            <Text style={styles.footerItemText}>{receitas.porcoes} Porções</Text>
           </View>
         </View>
-        <Text style={styles.title}>Ingrdientes</Text>
-        <View style={styles.body2}>
-            <View style={styles.footerCard2}>
-              <Text style={styles.footerItemText}>{receitas.ingredientes}</Text>
-              
-            </View>
-            <Text>
-              {recipe.modo_preparo}
-          </Text>
+      </View>
+      <Text style={styles.title}>Ingrdientes</Text>
+      <View style={styles.body2}>
+          <View style={styles.footerCard2}>
+            <Text style={styles.footerItemText}>{receitas.ingredientes}</Text>
+            
+          </View>
+
+           
         </View>
+          <View style={{marginTop: 20, flexDirection: 'row'}}>
+            <Text style={{marginRight: 10,  fontWeight: 'bold'}}>
+              Modo de Preparo
+            </Text>
+            <Text>
+              { receitas.modo_preparo}
+            </Text>
+          </View>
+        </>
+        ):null
+          }
       </ScrollView>
     </View>
   );
@@ -171,10 +184,12 @@ const styles = StyleSheet.create({
   },
   background: {
     width: w,
-    height: (w * 121) / 165,
+    height: (w * 121) / 230,
     position: 'absolute',
     top: 0,
-    backgroundColor: themes.colors.main
+    backgroundColor: themes.colors.main,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20
   },
   title: {
     fontSize: 18,

@@ -22,10 +22,10 @@ export function useUser() {
 
   async function selectUsuario({login, senha}) {
     return await database.selectUsuario({login, senha}).then((res) => {
+      const action = {type: 'getUser', payload: res};
+      dispatch(action);
       if(res.length > 0) {
         setSelectedUsuario(res);
-        const action = {type: 'getUser', payload: res};
-        dispatch(action);
         
         navigation.navigate('MainScreen');
       } else {

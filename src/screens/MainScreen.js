@@ -3,7 +3,6 @@ import React, {useEffect, useContext} from 'react';
 import {ScrollView, StyleSheet, Text, Dimensions, View, Image, TouchableOpacity, FlatList} from 'react-native';
 
 import {SafeAreaView} from 'react-native-safe-area-context';
-import TabRecipe from '../components/TabRecipe';
 import themes from '../config/themes';
 import {useRecipe} from '../hooks/userRecipe';
 import {AppContext} from '../store/appContext';
@@ -18,7 +17,7 @@ const w = Dimensions.get('window').width
 const MainScreen = () => {
   const {state, dispatch} = useContext(AppContext)
   const navigation = useNavigation();
-  const {getRecipe, getId} = useRecipe()
+  const {getRecipe,recipe} = useRecipe()
 
 
 
@@ -27,10 +26,8 @@ const MainScreen = () => {
   }, [])
 
   const handleDatails = async (id) => {
-    console.log('id da main',id)
-    navigation.navigate('DetailScreen', {
-        params: {id}
-      })
+    dispatch({type: 'selectedItem', payload: id})
+    navigation.navigate('DetailScreen')
   
   }
 
@@ -52,7 +49,7 @@ const MainScreen = () => {
         <View style={styles.itemScroll}>
         {
           state.recipe? state.recipe.map(item => (
-            <TouchableOpacity style={styles.item} onPress={() => getId(item.id)}>
+            <TouchableOpacity style={styles.item} onPress={() => handleDatails(item.id)}>
             <View
               style={styles.image}
             />

@@ -3,7 +3,7 @@ import React,{useState} from 'react';
 import {
   Dimensions,
   Image,
-  Pressable,
+  TouchableOpacity,
   StyleSheet,
   Text,
   View,
@@ -89,9 +89,9 @@ const CreateUser = () => {
           onChangeText={(t) => setSenha(t)}
         />
       <View style={{ alignItems: 'center'}}>
-        <Pressable onPress={handleCreateUser} style={styles.btn}>
+        <TouchableOpacity onPress={handleCreateUser} style={styles.btn}>
           <Text style={styles.btnTxt}>Criar</Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>
     </View>
     </View>

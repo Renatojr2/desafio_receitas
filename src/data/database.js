@@ -2,8 +2,6 @@ import SQLite from "react-native-sqlite-storage";
 import { DatabaseInitialization } from "./databaseInicialization";
 import { AppState, AppStateStatus } from "react-native";
 
-
-
 let databaseInstance;
  
 
@@ -15,6 +13,33 @@ async function createUser({id, nome, login, senha}) {
       
       console.log(`[db] usuario criado: "${results}"!`);
     });
+}
+
+async function insertId(id) {
+  return getDatabase()
+    .then((db) => db.executeSql("INSERT INTO id(id) VALUES (?);", [id]))
+    .then(([results]) => {
+      
+      console.log(`[db] usuario criado: "${results}"!`);
+    });
+}
+async function selectId() {
+  return getDatabase()
+    .then((db) => db.executeSql("SELECT * FROM id"))
+    .then(([results]) => {
+      if(results === undefined) {
+        return []
+      }
+      const count = results.rows.length;
+      const id = [];
+      for (let i = 0; i < count; i++) {
+        const row = results.rows.item(i);
+    
+        id.push(row);
+      }
+      return id;
+    })
+      
 }
 
 async function selectUsuario({login, senha}) {
@@ -83,6 +108,7 @@ async function getRecipe() {
       db.executeSql(`SELECT * FROM receitas;`),
     )
     .then(([results]) => {
+      console.log(results)
       if (results === undefined) {
         return [];
       }
@@ -91,12 +117,40 @@ async function getRecipe() {
       for (let i = 0; i < count; i++) {
         const row = results.rows.item(i);
         const { id, nome, tempo_preparo_minutos, porcoes, modo_preparo, ingredientes  } = row;
+        
         Recipe.push({ id, nome, tempo_preparo_minutos, porcoes, modo_preparo, ingredientes });
       }
       console.log(`[db] Receitas`, Recipe);
+
       return Recipe;
     });
 }
+
+async function getEspecificRecipe(id) {
+  
+  return getDatabase()
+    .then((db) =>
+      db.executeSql(`SELECT * FROM receitas WHERE id = ?;`, [id]),
+    )
+    .then(([results]) => {
+      console.log(results)
+      if (results === undefined) {
+        return [];
+      }
+      const count = results.rows.length;
+      const Recipe = [];
+      for (let i = 0; i < count; i++) {
+        const row = results.rows.item(i);
+       
+        Recipe.push(row);
+      }
+      console.log(`[db] Receitas`, Recipe);
+
+      return Recipe;
+    });
+}
+
+
 async function getCategory() {
   return getDatabase()
     .then((db) =>
@@ -118,32 +172,6 @@ async function getCategory() {
     });
 }
 
-async function updateListItem(listItem) {
-  const doneNumber = listItem.done ? 1 : 0;
-  return getDatabase()
-    .then((db) =>
-      db.executeSql("UPDATE ListItem SET text = ?, done = ? WHERE item_id = ?;", [
-        listItem.text,
-        doneNumber,
-        listItem.id,
-      ]),
-    )
-    .then(([results]) => {
-      console.log(`[db] List item with id: ${listItem.id} updated.`);
-    });
-}
-
-async function deleteList(list) {
-  console.log(`[db] Deleting list titled: "${list.title}" with id: ${list.id}`);
-  return getDatabase()
-    .then((db) => {
-      return db.executeSql("DELETE FROM ListItem WHERE list_id = ?;", [list.id]).then(() => db);
-    })
-    .then((db) => db.executeSql("DELETE FROM List WHERE list_id = ?;", [list.id]))
-    .then(() => {
-      console.log(`[db] Deleted list titled: "${list.title}"!`);
-    });
-}
 
 
 
@@ -213,5 +241,8 @@ export const sqliteDatabase = {
   insertCategory, 
   getCategory,
   getRecipe,
-  insertRecipe
+  insertRecipe,
+  getEspecificRecipe,
+  insertId,
+  selectId,
 };

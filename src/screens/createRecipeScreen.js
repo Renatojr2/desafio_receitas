@@ -40,12 +40,12 @@ const CreateRecipe = () => {
     const [preparo, setPreparo] = useState('')
     const [ingredientes, setIngredientes] = useState('')
 
-    const [selectedValue, setSelectedValue] = useState()
+    const [selectedValue] = useState()
     const navigation = useNavigation()
 
     const {state, dispatch} = useContext(AppContext);
     const {category} = useCategory()
-    const {insertRecipe, getRecipe} = useRecipe()
+    const {insertRecipe} = useRecipe()
   
 
     const id_categorias = category.find(category => category.nome === selectedValue);
@@ -58,7 +58,6 @@ const CreateRecipe = () => {
       await insertRecipe({id, nome, tempo, porcoes, preparo,ingredientes});
       const action = {type: 'categorySelected', payload: categoria }
       dispatch(action)
-      getRecipe()
         navigation.pop();
       }
 
@@ -95,6 +94,7 @@ const CreateRecipe = () => {
           style={styles.input} 
           placeholder='Tempo de preparo(min)'
           value={tempo}
+          keyboardType={'numeric'}
           onChangeText={(t) => setTempo(t)}
         />
        
@@ -102,6 +102,7 @@ const CreateRecipe = () => {
           style={styles.input}
           placeholder='Porções'
           value={porcoes}
+          keyboardType={'numeric'}
           onChangeText={(t) => setPorcoes(t)}
         />
         <View style={{marginBottom: 5}}>
